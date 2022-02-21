@@ -76,6 +76,7 @@ namespace HealthDataTracker
 
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
+                //set up the intial pass for the data
                 openFileDialog.InitialDirectory = "c:\\";
                 openFileDialog.Filter = "csv files (*.csv)|*.*";
                 openFileDialog.FilterIndex = 2;
@@ -86,6 +87,7 @@ namespace HealthDataTracker
                     //Get the path of specified file
                     filePath = openFileDialog.FileName;
 
+                    //read the health records from the importing csv file
                     var newRecords = new List<HealthRecord>();
                     using (var reader = new StreamReader(filePath))
                     using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
@@ -93,14 +95,17 @@ namespace HealthDataTracker
                         newRecords = (List<HealthRecord>)csv.GetRecords<HealthRecord>().ToList();
                     }
 
+                    //open the existing health data
                     String fileName = "HealthData.csv";
                     var records = new List<HealthRecord>();
                     using (var reader = new StreamReader(fileName))
                     using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                     {
+                        //load the existing health records
                         records = (List<HealthRecord>)csv.GetRecords<HealthRecord>().ToList();
                     }
 
+                    //iterate through each new record, if data exists update value, if it doesn't exist, add value to exisitng health record database
                     foreach (var nr in newRecords)
                     {
                         var isSameDate = false;
