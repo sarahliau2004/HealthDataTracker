@@ -28,12 +28,14 @@ namespace HealthDataTracker
 
         private void buttonSubmit_Click(object sender, EventArgs e)
         {
+            //create new record for today's data
             HealthRecord healthRecord = new HealthRecord();
             healthRecord.date = DateTime.Today.ToShortDateString();
             healthRecord.systolicBloodPressure = Convert.ToInt32(textBoxSystolicBloodPressure.Text);
             healthRecord.diastolicBloodPressure = Convert.ToInt32(textBoxDiastolicBloodPressure.Text);
             healthRecord.bloodSugar = Convert.ToInt32(textBoxBloodSugar.Text);
 
+            //read exisitng health records from database
             String fileName = "HealthData.csv";
             var records = new List<HealthRecord>();
             using (var reader = new StreamReader(fileName))
@@ -42,6 +44,7 @@ namespace HealthDataTracker
                 records = (List<HealthRecord>)csv.GetRecords<HealthRecord>().ToList();
             }
 
+            //iterate through health record, if data for that day already exists, replace it, otherwise insert data into database
             var isSameDate = false;
             foreach (var r in records)
             {
