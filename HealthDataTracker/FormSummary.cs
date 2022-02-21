@@ -73,18 +73,23 @@ namespace HealthDataTracker
                 int diastolicBloodPressure = y2[x.Length-1];
                 int bloodSugar = y3[x.Length-1];
 
+                //StringBuilder used because the user's health data may change dynamically, so we need to give out the recommendations accordingly depending on how the health data compares to the standard values
+                //We give different subrecommendations based on the user's daily health values and then combine the subrecommendations into a summary recommendation
                 StringBuilder sb = new StringBuilder();
 
+                //this condition recommended when user has low systollic blood pressure or low diastolic blood blood pressure
                 if (systolicBloodPressure <= 100 || diastolicBloodPressure <= 60)
                 {
                     sb.AppendLine("Your blood pressure today is low.");
                     sb.AppendLine("The system recommends drinking plenty of water and eating more salt. If you exercise, you should avoid activities that involve bending and rising quickly into a standing position.");
                 }
+                //this condition recommended when user has high systolic blood pressure or high diastolic blood pressure
                 else if (systolicBloodPressure >= 120 || diastolicBloodPressure >= 80)
                 {
                     sb.AppendLine("Your blood pressure today is high.");
                     sb.AppendLine("The system recommends increasing physical activity and decreasing the salt in your diet. You should also opt for a heart-healthy diet that includes more vegetables and fruits, whole grains, and low-fat protein sources.");
                 }
+                //this condition recommended when user's blood pressure values do not meet the criteria above and is deemed optimal
                 else
                 {
                     sb.AppendLine("Your blood pressure today is optimal.");
@@ -93,16 +98,19 @@ namespace HealthDataTracker
 
                 sb.AppendLine("  ");
 
+                //this condition recommended when user has low blood sugar
                 if (bloodSugar <= 70)
                 {
                     sb.AppendLine("Your blood sugar today is low.");
                     sb.AppendLine("The system recommends avoiding working out, or only exercising for very short periods of time. Additionally, you should eat more fruit and aim to eat carbohydrate - heavy foods such as whole wheat crackers.");
                 }
+                //this condition recommended when user has high blood sugar
                 else if (bloodSugar >= 100)
                 {
                     sb.AppendLine("Your blood sugar today is high.");
                     sb.AppendLine("The system recommends at least 30 minutes of exercise a day.You should also add more vegetables to your diet and eat higher - fiber foods.");
                 }
+                //this condition recommended when user's blood sugar values do not meet the criteria above and are deemed optimal
                 else
                 {
                     sb.AppendLine("Your blood sugar today is optimal.");
