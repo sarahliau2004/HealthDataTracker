@@ -23,20 +23,24 @@ namespace HealthDataTracker
 
         private void FormSummary_Load(object sender, EventArgs e)
         {
+            //reading in the data from the health database (Excel file)
             String fileName = "HealthData.csv";
             var records = new List<HealthRecord>();
             using (var reader = new StreamReader(fileName))
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
+                //order records by date from oldest to newest
                 records = (List<HealthRecord>)csv.GetRecords<HealthRecord>().ToList();
                 var orderRecords = from r in records
                                     orderby r.date
                                     select r;
 
+                //set x value as the date
                 string[] x = (from r in orderRecords.AsEnumerable()
                               orderby Convert.ToDateTime(r.date) ascending
                               select r.date).ToArray();
 
+                //set y value as either systolic pressure, diastolic pressure, or blood sugar depending on the chart, and match date with the health data
                 int[] y = (from r in orderRecords.AsEnumerable()
                            orderby Convert.ToDateTime(r.date) ascending
                            select r.systolicBloodPressure).ToArray();
@@ -49,6 +53,7 @@ namespace HealthDataTracker
                            orderby Convert.ToDateTime(r.date) ascending
                            select r.bloodSugar).ToArray();
 
+                //setting the properties of the chart
                 chartDataSystolicPressure.Series[0].LegendText = "Systolic Pressure";
                 chartDataSystolicPressure.Series[0].ChartType = SeriesChartType.Line;
                 chartDataSystolicPressure.Series[0].IsValueShownAsLabel = true;
