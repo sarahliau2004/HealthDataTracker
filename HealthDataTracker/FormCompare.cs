@@ -47,10 +47,12 @@ namespace HealthDataTracker
             int bs1 = 0;
             int bs2 = 0;
 
+            //this loop iterates through each health record in the database to find health data associated with the two dates
             foreach (var r in records)
             {
                 if (Convert.ToDateTime(r.date) == Convert.ToDateTime(date1))
                 {
+                    //if date is found, set the flag and collect health data for that date
                     isSameDate1 = true;
                     sbp1 = r.systolicBloodPressure;
                     dbp1 = r.diastolicBloodPressure;
@@ -67,6 +69,7 @@ namespace HealthDataTracker
 
             if (!isSameDate1)
             {
+                //if there is no data associated with the date the user entered, notify user of this 
                 string message = "There is no recorded data on " + date1 + ".";
                 string title = "No Data Found";
                 MessageBox.Show(message, title);
@@ -79,6 +82,7 @@ namespace HealthDataTracker
             }
             else if (isSameDate1 && isSameDate2)
             {
+                //if data found for both dates, compute the difference in blood presusre and sugar
                 textBoxSystolicBloodPressureChange.Text = (sbp2 - sbp1).ToString();
                 textBoxDiastolicBloodPressureChange.Text = (dbp2 - dbp1).ToString();
                 textBoxSugarChange.Text = (bs2 - bs1).ToString();
