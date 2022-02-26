@@ -73,8 +73,9 @@ namespace HealthDataTracker
                 int diastolicBloodPressure = y2[x.Length-1];
                 int bloodSugar = y3[x.Length-1];
 
-                //StringBuilder used because the user's health data may change dynamically, so we need to give out the recommendations accordingly depending on how the health data compares to the standard values
-                //We give different subrecommendations based on the user's daily health values and then combine the subrecommendations into a summary recommendation
+                //StringBuilder used because the user's health data may change dynamically, so we need to give out the recommendations accordingly depending on how the health
+                //data compares to the standard values. We give different subrecommendations based on the user's daily health values and then combine the subrecommendations
+                //into a summary recommendation
                 StringBuilder sb = new StringBuilder();
 
                 //this condition recommended when user has low systollic blood pressure or low diastolic blood blood pressure
